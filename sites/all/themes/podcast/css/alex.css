@@ -1,0 +1,21 @@
+/* Здесь будет код с лучшей вёрсткой во Вселенной */
+.TAtical{
+    color: red;
+}
+.TBlkbodyTxt{
+    font-size: 12px;
+}
+.TBlkbody > a {
+    text-decoration: none;
+}
+.TBlkbody{
+    font-size: 14px;
+}
+.TLnkReadmore{
+    font-size: 12px;
+}
+
+.TLnkReadmore > a{
+    text-decoration: none;
+    color: red;
+}

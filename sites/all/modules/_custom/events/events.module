@@ -1,0 +1,118 @@
+<?php
+//http://preview.codecanyon.net/item/wooevents-calendar-and-event-booking/full_screen_preview/15598178
+//https://codecanyon.net/item/wooevents-calendar-and-event-booking/15598178?s_rank=13
+
+function events_menu(){
+    $items['events'] = array(
+        'title' => '',
+        'page callback' => "events_page",
+        'access callback' => TRUE,
+    );
+    return $items;
+}
+
+function events_page(){
+    $ts = time();
+    $data = array();
+    $path_calendar = drupal_get_path('module','events') . "/styles.css";
+    $path_form = drupal_get_path('module','events') . "/form.css";
+    drupal_add_css($path_calendar);
+    drupal_add_css($path_form);
+    $current_month = events_get_current_month($ts);
+    $events = events_get_events();
+    $current_month = events_mix_date_and_events($events, $current_month);
+    return theme('events',array('data' => array('days' => $current_month, 'ts' => $ts)));
+}
+
+function events_get_events(){
+    $events = array(
+        '05-01-2018' => array(
+            'title' => 'Занятие с репетитором',
+            'place' => 'ул. Гагарина 25а кв. 27',
+            'body' => 'Здесь находится дополнительная информация. И тут надо что-то заполнить.',
+        ),
+        '21-01-2018' => array(
+            'title' => 'Игра в 60 секунд',
+            'place' => 'Ресторан "ВЕРШИНА"',
+            'body' => 'Все турниры состоят из нескольких конкурсов, каждый из которых — исключительно про кино в разных его проявлениях. Большинство заданий - мультимедийные, с аудио и видео. Присоединяйтесь к нам и проведите время с пользой в приятной компании единомышленников! ',
+        ),
+    );
+    return $events;
+}
+
+function events_mix_date_and_events($events, $current_month){
+    foreach($events as $date => $info){
+        if(isset($current_month[$date])){
+            $current_month[$date]['events'][] = $events[$date];
+        }
+    }
+    return $current_month;
+}
+
+function events_get_current_month($ts){
+    $month_of_days = array();
+    $current_day = date('j', $ts);
+    $start_month = $ts - ($current_day - 1) * 60 * 60 * 24;
+    $current_day_month = $start_month;
+    $day_of_week = date("w",$start_month);
+    if($day_of_week == 0){$day_of_week = 7;}
+    $day_of_month  = 1;
+    $all_day_of_month = date('t',$ts);
+    if($day_of_week != 1){
+        $start_pre_month = $start_month - ($day_of_week - 1) * 60 * 60 * 24;
+        $current_day_pre_month = $start_pre_month;
+        for($i = 1 ; $i < $day_of_week; $i++){
+            $date = date('d-m-Y', $current_day_pre_month);
+            $month_of_days[$date] = array(
+                'date' => date('d-m-Y', $current_day_pre_month),
+                'day' => date('d', $current_day_pre_month),
+                'events' => array(),
+                'day_of_week' => date('w', $current_day_pre_month),
+                'is_current_month' => False,
+                'today' => (date('dmY', $current_day_pre_month) == date('dmY',$ts)) ? True : False,
+            );
+
+            $current_day_pre_month += 60*60*24;
+        }
+    }
+
+    for($i=1; $i <= $all_day_of_month; $i++){
+       $date = date('d-m-Y', $current_day_month);
+       $month_of_days[$date] = array(
+           'date' => date('d-m-Y', $current_day_month) ,
+           'day' => date('j', $current_day_month),
+           'events' => array(),
+           'day_of_week' => date('w', $current_day_month),
+           'is_current_month' => True,
+           'today' => (date('dmY', $current_day_month) == date('dmY',$ts)) ? True : False,
+       );
+       $current_day_month += 60*60*24;
+    }
+    $final_day_of_week = count($month_of_days) % 7;
+    if($final_day_of_week != 0){
+        for($i = $final_day_of_week + 1; $i <= 7; $i++){
+            $date = date('d-m-Y', $current_day_month);
+            $month_of_days[$date] = array(
+                'date' => date('d-m-Y', $current_day_month) ,
+                'day' => date('j', $current_day_month),
+                'events' => array(),
+                'day_of_week' => date('w', $current_day_month),
+                'is_current_month' => False,
+                'today' => (date('dmY', $current_day_month) == date('dmY',$ts)) ? True : False,
+            );
+            $current_day_month += 60*60*24;
+        }
+    }
+
+    return $month_of_days;
+}
+
+function events_theme(){
+    return array(
+        'events' => array(
+            'template' => 'templates/calendar',
+            'variables' => array('data' => array()),
+        )
+    );
+}
+
