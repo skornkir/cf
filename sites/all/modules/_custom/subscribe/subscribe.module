@@ -1,0 +1,55 @@
+<?php
+//http://preview.codecanyon.net/item/wooevents-calendar-and-event-booking/full_screen_preview/15598178
+//https://codecanyon.net/item/wooevents-calendar-and-event-booking/15598178?s_rank=13
+
+function subscribe_block_info(){
+    $blocks['subscribe'] = array(
+        'info' => t('Subscribe'),
+        'cache' => DRUPAL_NO_CACHE
+    );
+
+    return $blocks;
+}
+
+function subscribe_block_view($delta){
+    $block = array();
+    switch ($delta) {
+        case 'subscribe':
+            $block['content'] = render(drupal_get_form('subscribe_form'));
+            break;
+    }
+
+    return $block;
+}
+
+function subscribe_form($form, $form_state){
+    $form['markup_title'] = array(
+        '#markup' => '<div class="subscribe-tile">Не пропусти еженедельные выпуски. Подпишись прямо сейчас</div>',
+    );
+
+    $form['markup_desc'] = array(
+        '#markup' => '<div class="subscribe-desc">Только самые свежие материалы: тренировки от топ-атлетов, советы, питание и многое другое</div>',
+    );
+
+    $form['state'] = array(
+        '#type' => 'fieldset',
+    );
+
+    $form['state']['email'] = array(
+        '#type' => 'textfield',
+        '#attributes' => array(
+            'placeholder' => 'Введите email'
+        ),
+    );
+
+    $form['state']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Подписаться'
+    );
+
+    return $form;
+}
+
+function subscribe_form_submit($form, $form_state){
+    drupal_set_message('Подписка оформлена');
+}

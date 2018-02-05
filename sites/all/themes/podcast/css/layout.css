@@ -26,7 +26,7 @@ body{
 }
 
 .front  .second-header{
-    height: 590px;
+    height: 140px;
     background: url('../img/bg-header.png');
 }
 
@@ -153,7 +153,7 @@ body{
 .header__region.region-header{
     width: 1140px;
     margin: 0 auto;
-    padding-top: 140px;
+    padding-top: 50px;
 }
 
 .header__region.region-header .left{
@@ -303,7 +303,7 @@ body{
 .header-title-wrapper{
     margin: 0 auto;
     width: 1140px;
-    padding-top: 54px;   
+    padding-top: 54px;
 }
 
 .header-title{
@@ -315,3 +315,239 @@ body{
 .header-title .red{
     color: #fc1643;
 }
+
+#block-subscribe-subscribe{
+    padding-top: 84px;
+    padding-bottom: 90px;
+}
+
+#block-subscribe-subscribe .subscribe-tile{
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+}
+
+#block-subscribe-subscribe .subscribe-tile{
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 40px;
+}
+
+#block-subscribe-subscribe .subscribe-desc{
+    text-align: center;
+    font-size: 14px;
+    width: 500px;
+    margin: 0 auto;
+    color: #8a8a8a;
+    padding-bottom: 3px;
+}
+
+#block-subscribe-subscribe #edit-state{
+    border: none;
+    width: 500px;
+    margin: 0 auto;
+}
+
+#block-subscribe-subscribe #edit-email{
+    width: 270px;
+    padding: 5px 5px;
+    float: left;
+}
+
+#block-subscribe-subscribe input[type=submit]{
+    background: none;
+    margin-left: 40px;
+    border: 2px solid #fc1643;
+    padding: 5px 19px;
+    color: #fc1643;
+    font-weight: 600;
+}
+
+.anounce-wrapper{
+    color: #fff;
+    font-size: 24px
+}
+
+.anounce-wrapper .red{
+    color: #fc1643;
+}
+
+.about .image img{
+    width: 42%;
+    float: left;
+    border: 5px solid #fc1643;
+}
+
+.about .body{
+    line-height: 30px;
+    margin-left: 43%;
+    text-align: justify;
+}
+
+
+.about .body p{
+    margin: 1.5rem 0;
+    padding: 0;
+    margin-bottom: 0px;
+    margin-top: 12px;
+    color: #616161;
+    padding-left: 60px;
+}
+
+.about .body .red{
+    color: #fc1643;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.clear{
+    clear: both;
+}
+
+.page-contacts .header {
+    margin-bottom: 40px;
+}
+
+.page-contacts  blockquote{
+    position: relative;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    margin: 0;
+}
+
+.page-contacts  blockquote p span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 120px;
+    line-height: .8em;
+}
+
+
+.page-contacts .about blockquote p {
+    margin: 0;
+    padding: 0 0 0 60px;
+    font-size: 28px;
+    font-style: italic;
+    text-align: justify;
+    line-height: 1.4em;
+    color: #979797;
+}
+
+.page-contacts blockquote .author{
+    color: #979797;
+    padding-left: 61px;
+}
+
+.page-contacts .layout-3col__full{
+    padding: 0;
+}
+
+.page-contacts input[type=text]{
+    padding: 12px 12px;
+    border: 1px solid #e4e4e4;
+}
+
+.page-contacts .form-type-textfield{
+    float: left;
+    width: 353px;
+    margin-right: 40px;
+}
+
+.page-contacts .form-type-textfield.form-item-title {
+    /* float: none; */
+    margin-right: 0;
+}
+
+.page-contacts .form-type-textarea {
+    clear: both;
+}
+
+.page-contacts textarea{
+    padding: 12px;
+}
+
+.grippie{
+    display: none !important;
+}
+
+#about-contact-form{
+    margin-bottom: 30px;
+}
+
+#about-contact-form input[type=submit]{
+    border: 2px solid #fc1643;
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fc1643;
+}
+
+#about-contact-form input[type=submit]:hover{
+    border: 2px solid #fc1643;
+    width: 100%;
+    background: #fc1643;
+    padding: 10px 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #fff;
+}
+
+#block-subscribe-subscribe input[type=submit]:hover{
+    background: #fc1643;
+    color: #fff;
+}
+
+.page-podcasts .layout-3col__right-content{
+    width: 850px;
+    margin-left: 290px;
+    padding: 0;
+}
+
+.page-podcasts .layout-3col__left-sidebar{
+    width: 260px;
+    margin-right: 880px;
+}
+
+.page-podcasts  .view-main-episodes .views-row:nth-child(3n) {
+    float: left;
+    margin-right: 0;
+}
+
+.page-podcasts  .view-main-episodes .views-row:nth-child(3n+1) {
+    margin-right: 20px;
+    clear: both;
+
+}
+
+.not-front{
+    background: #faf9f9;
+}
+
+.layout-3col__left-sidebar .block{
+    background: #fff;
+    padding: 15px;
+}
+
+.page-podcasts .view-main-episodes .views-field-title a{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 15px;
+    height: auto;
+}
+
+.page-podcasts .view-main-episodes .views-field-body p{
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.page-podcasts .view-main-episodes .views-row {
+    width: 262px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+} 

@@ -56,18 +56,19 @@ function STARTERKIT_preprocess_html(&$variables, $hook) {
  */
 
 function podcast_preprocess_page(&$variables) {
-    $variables['title_header']  = '<div class="header-title-wrapper">';
+    $variables['title_header']  = '<div class="header-title-wrapper"><div class="header-title">';
     if(arg(0) == "video-blog" || arg(0) == "blog"){
-        $variables['title_header'] .= '<div class="header-title">
-                                           <span>Записи из </span>
-                                           <span class="red">#Блога</span>
-                                        </div>';
+        $variables['title_header'] .= '<span>Записи из </span><span class="red">#Блога</span>';
     }
-    $variables['title_header']  .= '</div>';
+    if(arg(0) == "contacts"){
+        $variables['title_header'] .= '<span>Обратная </span><span class="red">связь</span>';
+    }
+    if(arg(0) == "podcasts"){
+        $variables['title_header'] .= '<span>Эпизоды </span><span class="red">#подкаста</span>';
+    }
 
-    ddl($variables);
+    $variables['title_header']  .= '</div></div>';
 }
-
 
 /**
  * Override or insert variables into the region templates.

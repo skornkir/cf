@@ -1,0 +1,67 @@
+<?php
+//http://preview.codecanyon.net/item/wooevents-calendar-and-event-booking/full_screen_preview/15598178
+//https://codecanyon.net/item/wooevents-calendar-and-event-booking/15598178?s_rank=13
+
+function about_menu(){
+    $blocks['contacts'] = array(
+        'page callback' => 'about_page',
+        'access callback' => TRUE,
+    );
+
+    return $blocks;
+}
+
+
+function about_page(){
+    $output = theme('about');
+    $output .= render(drupal_get_form('about_contact_form'));
+    return $output;
+}
+
+function about_theme(){
+    return array(
+        'about' => array(
+            'template' => 'templates/about',
+        )
+    );
+}
+
+
+function about_contact_form(){
+    $form['name'] = array(
+        '#type' => 'textfield',
+        '#attributes' => array(
+            'placeholder' => 'Ваше имя',
+        ),
+    );
+
+    $form['email'] = array(
+        '#type' => 'textfield',
+        '#attributes' => array(
+            'placeholder' => 'Email',
+        ),
+    );
+
+    $form['title'] = array(
+        '#type' => 'textfield',
+        '#attributes' => array(
+            'placeholder' => 'Тема вопроса',
+        ),
+    );
+
+    $form['body'] = array(
+        '#type' => 'textarea',
+        '#attributes' => array(
+            'placeholder' => 'Суть вопроса',
+        ),
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Отправить',
+    );
+
+
+    return $form;
+}
+

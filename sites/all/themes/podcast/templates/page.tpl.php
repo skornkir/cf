@@ -53,6 +53,8 @@
       endif;
     ?>
 
+      <?php print $messages; ?>
+
     <main class="<?php print $content_class; ?>" role="main">
       <?php // print $breadcrumb; ?>
       <a href="#skip-link" class="visually-hidden visually-hidden--focusable" id="main-content">Back to top</a>
@@ -61,7 +63,7 @@
         <h1><?php print $title; ?></h1>
       <?php endif; ?>
       <?php print render($title_suffix); ?>
-      <?php print $messages; ?>
+
       <?php print render($tabs); ?>
       <?php print render($page['help']); ?>
       <?php if ($action_links): ?>
@@ -70,7 +72,7 @@
       <?php print render($page['content']); ?>
       <?php print $feed_icons; ?>
     </main>
-    <div style="clear: both;"></div>
+
 
     <div class="after-main">
       <?php print render($page['navigation']); ?>
@@ -87,6 +89,8 @@
         <?php print $sidebar_second; ?>
       </aside>
     <?php endif; ?>
+
+      <div style="clear: both;"></div>
 
   </div>
 

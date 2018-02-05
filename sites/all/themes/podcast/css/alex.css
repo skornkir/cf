@@ -1,21 +1,41 @@
-/* Здесь будет код с лучшей вёрсткой во Вселенной */
+/* Здесь находится код с лучшей вёрсткой во Вселенной */
+
 .TAtical{
     color: red;
+    margin-bottom: 22px;
 }
-.TBlkbodyTxt{
-    font-size: 12px;
-}
+
 .TBlkbody > a {
     text-decoration: none;
+    color: #000000;
 }
+
 .TBlkbody{
     font-size: 14px;
+    width: 360px;
+    margin:22px 0px 27px 0px;
 }
+
+.TBlkbodyTxt{
+    font-size: 12px;
+    text-align: justify;
+    width: 360px;
+    margin:27px 0px 27px 0px;
+}
+
 .TLnkReadmore{
     font-size: 12px;
+    padding-top: 26px;
+
 }
 
 .TLnkReadmore > a{
-    text-decoration: none;
-    color: red;
+text-decoration: none;
+color: red;
+}
+
+.view-video-blog .views-row{
+    width: 360px;
+    float: left;
+    margin: 0px 15px 74px 15px;
 }
