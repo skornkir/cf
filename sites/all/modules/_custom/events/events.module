@@ -11,6 +11,33 @@ function events_menu(){
     return $items;
 }
 
+function events_block_info(){
+    $blocks['category_translate'] = array(
+        'info' => t('Категория переводов'),
+    );
+
+    return $blocks;
+}
+
+function events_block_view($delta = ''){
+    $block = array();
+    switch($delta){
+        case "category_translate":
+            $block['title'] = 'Категория';
+            $block['content'] = events_get_voc_category();
+            break;
+    }
+
+    return $block;
+}
+
+function events_get_voc_category(){
+    $vid = 5;
+    $terms = taxonomy_get_tree($vid);
+    $output = theme('category', array('terms' => $terms));
+    return $output;
+}
+
 function events_page(){
     $ts = time();
     $data = array();
@@ -112,6 +139,10 @@ function events_theme(){
         'events' => array(
             'template' => 'templates/calendar',
             'variables' => array('data' => array()),
+        ),
+        'category' => array(
+            'template' => 'templates/category',
+            'variables' => array('terms' => array()),
         )
     );
 }

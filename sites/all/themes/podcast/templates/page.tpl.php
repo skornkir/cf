@@ -29,6 +29,7 @@
                 <?php print render($page['header']); ?>
             <?php endif; ?>
         </div>
+        <?php  print $breadcrumb; ?>
     </header>
 
   <div class="layout-3col layout-swap">
@@ -56,7 +57,7 @@
       <?php print $messages; ?>
 
     <main class="<?php print $content_class; ?>" role="main">
-      <?php // print $breadcrumb; ?>
+
       <a href="#skip-link" class="visually-hidden visually-hidden--focusable" id="main-content">Back to top</a>
       <?php print render($title_prefix); ?>
       <?php if ($title): ?>

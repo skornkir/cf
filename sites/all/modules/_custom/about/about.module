@@ -2,6 +2,10 @@
 //http://preview.codecanyon.net/item/wooevents-calendar-and-event-booking/full_screen_preview/15598178
 //https://codecanyon.net/item/wooevents-calendar-and-event-booking/15598178?s_rank=13
 
+function about_form_search_block_form_alter(&$form, $form_state){
+    $form['search_block_form']['#attributes']['placeholder'] = 'Поиск..';
+}
+
 function about_menu(){
     $blocks['contacts'] = array(
         'page callback' => 'about_page',
