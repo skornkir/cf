@@ -92,9 +92,13 @@ body{
 }
 
 .view-main-episodes .views-row{
-    width: 262px;
+    width: 270px;
     float: left;
     margin-right: 20px;
+}
+
+.view-main-episodes .views-row img{
+    width: 270px;
 }
 
 .view-main-episodes .views-row:nth-child(4n){
@@ -684,4 +688,10 @@ body{
     text-decoration: none;
     font-size: 13px;
     font-weight: bold;
+}
+
+
+.layout-3col .layout-3col__full {
+    padding-left: 0;
+    padding-right: 0;
 }
