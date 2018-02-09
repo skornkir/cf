@@ -66,6 +66,10 @@ function podcast_preprocess_page(&$variables) {
     if(arg(0) == "podcasts"){
         $variables['title_header'] .= '<span>Эпизоды </span><span class="red">#подкаста</span>';
     }
+    if(arg(0) == "translations"){
+        $variables['title_header'] .= '<span>Переведенные </span><span class="red">#статьи</span>';
+    }
+
 
     $variables['title_header']  .= '</div></div>';
 }

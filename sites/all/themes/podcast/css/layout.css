@@ -112,6 +112,7 @@ body{
     height: 40px;
     margin-bottom: 40px;
     display: block;
+    color: #000;
 }
 
 .view-main-episodes .views-field-title a:hover{
@@ -120,6 +121,10 @@ body{
 
 .view-main-episodes .views-field-field-image-episode{
     margin-bottom: 12px;
+}
+
+.view-main-episodes  .views-field-title{
+    height: 62px;
 }
 
 .header{
@@ -552,7 +557,8 @@ body{
     margin-bottom: 30px;
 }
 
-.layout-3col__left-sidebar .block{
+.layout-3col__left-sidebar  .block,
+.layout-3col__right-sidebar .block{
     background: #fff;
     padding: 15px;
     padding-left: 20px;
@@ -570,6 +576,10 @@ body{
     padding: 0;
     list-style: none;
     margin-bottom: 12px;
+}
+
+#block-events-category-translate .category ul li.active a i{
+    color: #fc1643;
 }
 
 #block-events-category-translate .category ul li a{
@@ -694,4 +704,92 @@ body{
 .layout-3col .layout-3col__full {
     padding-left: 0;
     padding-right: 0;
+}
+
+.view-translate .views-field-title{
+
+}
+
+.view-translate .views-field-title a{
+    text-decoration: none;
+    color: #000;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.view-translate .views-field-title a:hover{
+    color: #fc1643;
+}
+
+.view-translate .views-row{
+    width: 100%;
+    margin-bottom: 30px;
+    margin-right: 25px;
+    clear: both;
+}
+
+.view-translate .views-row:nth-child(4n){
+    margin-right: 0;
+}
+
+.sidebar-second  .layout-3col__right-sidebar {
+    clear: right;
+    float: right;
+    width: 295px;
+    margin-right: 0%;
+    margin: 0;
+    margin-left: -100%;
+    padding: 0;
+}
+
+.view-translate  .title{
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 12px;
+    position: relative;
+}
+
+.view-translate .title .line{
+    position: absolute;
+    top: 38px;
+    border-bottom: 2px solid #fc1643;
+    width: 50px;
+}
+
+.content-views{
+    padding-top: 20px;
+}
+
+.view-translate .left{
+    float: left;
+}
+
+.view-translate .right{
+    margin-left: 280px;
+    font-size: 13px;
+    height: 173px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.view-translate .views-field-body p {
+    margin-top: 0;
+    margin-bottom: 11px;
+}
+
+.page-translations.not-front{
+    background: #fff;
+}
+
+.view-translate .shadow{
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.99) 79%, rgba(255,255,255,1) 80%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.99) 79%,rgba(255,255,255,1) 80%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.99) 79%,rgba(255,255,255,1) 80%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    width: 100%;
+    position: absolute;
+    height: 50px;
+    top: 123px;
+    left: 0;
 }

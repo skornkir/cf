@@ -68,7 +68,8 @@ stylesheets[all][] = css/styles.css
 
 ; Optionally add some JavaScripts to your theme.
 
-;scripts[] = js/script.js
+scripts[] = js/masonry.pkgd.min.js
+scripts[] = js/kir.js
 
 
 
