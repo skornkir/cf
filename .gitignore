@@ -3,6 +3,7 @@ sites/*/settings*.php
 
 # Ignore paths that contain user-generated content.
 sites/*/files
+sites/default/*.php
 sites/*/private
 C:/xampp
 .idea
@@ -10,3 +11,4 @@ C:/xampp
 #.htaccess
 .editorconfig
 react
+sites/default/default.settings.php

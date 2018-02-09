@@ -1,47 +1,96 @@
 /* Здесь находится код с лучшей вёрсткой во Вселенной */
 
 .TAtical{
-    color: red;
+    color: #ffffff;
+    font-size: 12px;
     margin-bottom: 22px;
+    text-transform: uppercase;
+    background-color: #fc1643;
+    padding: 8px 10px 8px 10px;
+    border-radius: 4px;
+    font-weight: normal;
 }
 
-.TBlkbody > a {
+.TBlkbody a{
+     text-decoration: none;
+     color: #000000;
+ }
+
+.view-video-blog a:hover{
     text-decoration: none;
-    color: #000000;
+    color: #fc1643;
 }
 
 .TBlkbody{
-    font-size: 14px;
-    width: 360px;
-    margin:22px 0px 27px 0px;
+    font-size: 16px;
+    width: 355px;
+    height: 28px;
+    margin:20px 0px 38px 0px;
 }
 
 .TBlkbodyTxt{
     font-size: 12px;
     text-align: justify;
-    width: 360px;
+    line-height: 20px;
+    width: 355px;
     margin:27px 0px 27px 0px;
 }
 
 .TLnkReadmore{
-    font-size: 12px;
+    font-size: 13px;
     padding-top: 26px;
 
 }
 
-.TLnkReadmore > a{
+.TLnkReadmore a{
 text-decoration: none;
 color: red;
 }
 
 .view-video-blog .views-row{
-    width: 360px;
+    width: 355px;
     float: left;
-    margin: 0px 15px 74px 15px;
+    margin: 0px 37px 74px 0px;
+}
+
+.view-video-blog .views-row:nth-child(3n) {
+    margin-right: 0px;
+}
+
+.view-video-blog .views-row:nth-child(3n+1) {
+    clear: both;
+}
+
+.view-video-blog .pager a{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0px 0px 0px 5px;
+}
+
+.view-video-blog .pager-current{
+    text-decoration: none;
+    color: #fc1643;
+    padding: 0px 0px 0px 0px;
+}
+
+.view-video-blog .pager-item{
+    text-decoration: none;
+    color: #fc1643;
+    padding: 0px 5px 0px 0px;
+}
+
+.view-video-blog .pager-next{
+    text-decoration: none;
+    color: #fc1643;
+    padding: 0px 0px 0px 0px;
 }
 
 
-/*удали потом эту хрень*/
+
+
+
+
 
 
 
