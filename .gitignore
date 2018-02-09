@@ -7,6 +7,6 @@ sites/*/private
 C:/xampp
 .idea
 .gitignore/*
-.htaccess
+#.htaccess
 .editorconfig
 react
