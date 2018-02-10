@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the transform content feature.
+ */
+
+include_once 'transform_content.features.inc';
