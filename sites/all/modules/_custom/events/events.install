@@ -1,0 +1,8 @@
+<?php
+
+/**
+ * Смена языка нод для редиркта
+ */
+function events_update_7001(){
+    db_query("UPDATE node SET language='ru'");
+}
