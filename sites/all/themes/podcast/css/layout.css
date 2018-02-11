@@ -528,11 +528,60 @@ body{
     padding: 0;
 }
 
-.page-podcasts .layout-3col__left-sidebar{
+.page-podcasts .layout-3col__left-sidebar,
+.page-node .layout-3col__left-sidebar{
     width: 283px;
     margin-left: 0;
     margin-right: 869px;
 }
+
+.page-node .layout-3col__right-content{
+    width: 850px;
+    margin-left: 290px;
+    padding: 0;
+    background: #fff;
+    padding-left: 68px;
+    padding-top: 40px;
+    padding-right: 65px;
+    margin-bottom: 40px;
+    min-height: 500px;
+    padding-bottom: 40px;
+}
+
+
+.node-type-episode .layout-3col__right-content > h1,
+.node-type-transalte  .layout-3col__right-content > h1{
+    display: none;
+}
+
+.node-type-episode .layout-3col__right-content .title,
+.node-type-transalte .layout-3col__right-content .title{
+    font-size: 18px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.node-type-episode .layout-3col__right-content .body,
+.node-type-transalte  .layout-3col__right-content .body{
+    color: #6b6b6b;
+}
+
+.node-type-episode .layout-3col__right-content .youtube-field-player{
+    width: 100%;
+    height: 400px;
+}
+
+.node-type-episode .layout-3col__right-content .title .line,
+.node-type-transalte  .layout-3col__right-content .title .line{
+    border-bottom: 2px solid #fc1643;
+    width: 50px;
+    position: absolute;
+    top: 33px;
+}
+
 
 .page-podcasts  .view-main-episodes .views-row:nth-child(3n) {
     float: left;
@@ -793,3 +842,12 @@ body{
     top: 123px;
     left: 0;
 }
+
+/*.breadcrumb__separator{*/
+    /*display: #fff;*/
+/*}*/
+/*.breadcrumb__separator:before {*/
+    /*color: #ccc;*/
+    /*content: "/ ";*/
+    /*padding: 0 5px;*/
+/*}*/

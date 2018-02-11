@@ -70,7 +70,19 @@ function podcast_preprocess_page(&$variables) {
         $variables['title_header'] .= '<span>Переведенные </span><span class="red">#статьи</span>';
     }
 
-
+    if(arg(0) == "node" && is_numeric(arg(1))){
+        $title_words =   explode(" ",$variables['node']->title);
+        $index = 0;
+        foreach($title_words as $word){
+            if(count($title_words)/2 > $index){
+                $variables['title_header'] .= '<span>'. $word . ' </span>';
+            }
+            else{
+                $variables['title_header'] .= '<span class="red">'. $word . ' </span>';
+            }
+            $index++;
+        }
+    }
     $variables['title_header']  .= '</div></div>';
 }
 
