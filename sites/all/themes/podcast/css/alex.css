@@ -1,12 +1,14 @@
 /* Здесь находится код с лучшей вёрсткой во Вселенной */
 
+/*Blog general. Main page*/
+
 .TAtical{
     color: #ffffff;
     font-size: 12px;
     margin-bottom: 22px;
     text-transform: uppercase;
     background-color: #fc1643;
-    padding: 8px 10px 8px 10px;
+    padding: 5px 10px 5px 10px;
     border-radius: 4px;
     font-weight: normal;
 }
@@ -64,6 +66,7 @@ color: red;
 .view-video-blog .pager a{
     text-decoration: none;
     font-size: 16px;
+    color: #000000;
     font-weight: bold;
     padding: 0px 0px 0px 5px;
 }
@@ -85,6 +88,51 @@ color: red;
     color: #fc1643;
     padding: 0px 0px 0px 0px;
 }
+
+/*Blog. Single aticles*/
+
+.RTxt{
+    color: #fc1643;
+    float: left;
+    margin-right: 10px;
+}
+
+.DAticle{
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.TxtAticle{
+    color: #585858;
+    font-size: 14px;
+}
+
+.node-type-blog .layout-3col__right-content > h1{
+    display: none;
+}
+
+.field-name-field-blog{
+    display: none;
+}
+
+.node-type-blog .layout-3col__right-content .title .line {
+    border-bottom: 2px solid #fc1643;
+    width: 50px;
+    position: absolute;
+    top: 33px;
+}
+
+.node-type-blog .layout-3col__right-content .title {
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+    padding-bottom: 10px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+
 
 
 
