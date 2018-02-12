@@ -69,7 +69,9 @@ function podcast_preprocess_page(&$variables) {
     if(arg(0) == "translations"){
         $variables['title_header'] .= '<span>Переведенные </span><span class="red">#статьи</span>';
     }
-
+    if(arg(0) == "tasks"){
+        $variables['title_header'] .= '<span>Мои </span><span class="red">#задачи</span>';
+    }
     if(arg(0) == "node" && is_numeric(arg(1))){
         $title_words =   explode(" ",$variables['node']->title);
         $index = 0;
