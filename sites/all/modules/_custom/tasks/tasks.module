@@ -1,0 +1,88 @@
+<?php
+
+function tasks_menu(){
+    $items['task/%'] = array(
+        'title' => '',
+        'page callback' => "tasks_page",
+        'page arguments' => array(1),
+        'access callback' => TRUE,
+    );
+    return $items;
+}
+
+function tasks_page($nid){
+    $node = node_load($nid);
+    $path = drupal_get_path('module', 'tasks');
+    drupal_add_css("sites/all/modules/_custom/tasks" . "/css/styles.css");
+    $executor = user_load($node->field_executor['und'][0]['uid']);
+    $priority = taxonomy_term_load($node->field_priority['und'][0]['tid']);
+    $body = (isset($node->body['und'][0]['value'])) ? $node->body['und'][0]['value'] : "";
+    $data = array(
+        'id' => $nid,
+        'title' => $node->title,
+        'body' => $body,
+        'executor' => $executor->name,
+        'priority' => $priority->name,
+        'created' => date('d.m.y H:i'),
+    );
+    $output = theme('task',array('data' => $data));
+    return $output;
+}
+
+function tasks_theme(){
+    return array(
+        'task' => array(
+            'template' => 'templates/task',
+            'variables' => array('data' => array()),
+        )
+    );
+}
+
+function tasks_comment_form($form, $form_state){
+
+    $form['comment'] = array(
+        '#type' => 'fieldset',
+        '#title' => 'Новый комментарий',
+        '#collapbsible' => FALSE,
+        '#collapsed' => FALSE,
+    );
+
+    $form['comment']['text'] = array(
+        '#type' => 'textarea',
+        '#title' => '',
+    );
+
+    $form['comment']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Оставить комментарий',
+    );
+
+    return $form;
+}
+
+function tasks_comment_form_submit($form, $form_state){
+    $nid = arg(1);
+    global $user;
+    ddl($form_state);
+    $comment = new stdClass();
+        $comment->nid = $nid; // nid of a node you want to attach a comment to
+    $comment->cid = 0;
+    $comment->pid = 0;
+    $comment->uid = $user->uid;
+    $comment->mail = $user->mail;
+    $comment->name = $user->name; // If user is authenticated you can omit this field, it will be auto-populated, if the user is anonymous and you want to name him somehow, input his name here
+    $comment->thread = '01/';
+    $comment->hostname = '127.0.01';
+    $comment->created = time();
+    $comment->is_anonymous = 0; // leave it as is
+    $comment->homepage = '';
+    $comment->status = COMMENT_PUBLISHED; // We auto-publish this comment
+    $comment->language = LANGUAGE_NONE;
+    $comment->subject = 'Comment subject';
+    $comment->comment_body[$comment->language][0]['value'] = $form_state['values']['text'];
+    $comment->comment_body[$comment->language][0]['format'] = 'filtered_html';
+
+    comment_submit($comment); // saving a comment
+    comment_save($comment);
+    drupal_set_message('Комментарий создан');
+}
