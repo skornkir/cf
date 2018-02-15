@@ -125,9 +125,39 @@ function transform_content_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'tasks' => 'tasks',
   );
+  /* Filter criterion: Содержимое: Исполнитель (field_executor) */
+  $handler->display->display_options['filters']['field_executor_uid']['id'] = 'field_executor_uid';
+  $handler->display->display_options['filters']['field_executor_uid']['table'] = 'field_data_field_executor';
+  $handler->display->display_options['filters']['field_executor_uid']['field'] = 'field_executor_uid';
+  $handler->display->display_options['filters']['field_executor_uid']['value'] = array(
+    1 => '1',
+  );
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['filter_groups'] = FALSE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Содержимое: Опубликовано */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'node';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = 1;
+  $handler->display->display_options['filters']['status']['group'] = 1;
+  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
+  /* Filter criterion: Содержимое: Тип */
+  $handler->display->display_options['filters']['type']['id'] = 'type';
+  $handler->display->display_options['filters']['type']['table'] = 'node';
+  $handler->display->display_options['filters']['type']['field'] = 'type';
+  $handler->display->display_options['filters']['type']['value'] = array(
+    'tasks' => 'tasks',
+  );
+  /* Filter criterion: Содержимое: Исполнитель (field_executor) */
+  $handler->display->display_options['filters']['field_executor_uid']['id'] = 'field_executor_uid';
+  $handler->display->display_options['filters']['field_executor_uid']['table'] = 'field_data_field_executor';
+  $handler->display->display_options['filters']['field_executor_uid']['field'] = 'field_executor_uid';
+  $handler->display->display_options['filters']['field_executor_uid']['value'] = array(
+    3 => '3',
+  );
   $handler->display->display_options['path'] = 'tasks';
   $translatables['tasks'] = array(
     t('Master'),

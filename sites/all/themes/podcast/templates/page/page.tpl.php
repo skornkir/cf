@@ -31,6 +31,15 @@
         </div>
         <?php  print $breadcrumb; ?>
     </header>
+    <?php if(isset($page['third_header'])): ?>
+        <div class="third-header-wrapper">
+            <div class="third-header">
+                <?php print render($page['third_header']); ?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+
 
   <div class="layout-3col layout-swap">
 

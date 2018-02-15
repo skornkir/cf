@@ -2,6 +2,18 @@
 //http://preview.codecanyon.net/item/wooevents-calendar-and-event-booking/full_screen_preview/15598178
 //https://codecanyon.net/item/wooevents-calendar-and-event-booking/15598178?s_rank=13
 
+function events_views_pre_view(&$view) {
+    switch ($view->name) {
+        case 'tasks': {
+            $view_filters = $view->display_handler->get_option('filters');
+            global $user;
+            $view_filters['field_executor_uid']['value'] = array($user->uid => $user->uid);
+            $view->display_handler->override_option('filters', $view_filters);
+            break;
+        }
+    }
+}
+
 function events_menu(){
     $items['events'] = array(
         'title' => '',
