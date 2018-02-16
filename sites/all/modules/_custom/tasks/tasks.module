@@ -7,6 +7,13 @@ function tasks_menu(){
         'page arguments' => array(1),
         'access callback' => TRUE,
     );
+
+    $items['task/new'] = array(
+        'title' => '',
+        'page callback' => "drupal_get_form",
+        'page arguments' => array('tasks_create_task_form'),
+        'access callback' => TRUE,
+    );
     return $items;
 }
 
@@ -16,6 +23,7 @@ function tasks_page($nid){
     drupal_add_css("sites/all/modules/_custom/tasks" . "/css/styles.css");
     $executor = user_load($node->field_executor['und'][0]['uid']);
     $priority = taxonomy_term_load($node->field_priority['und'][0]['tid']);
+    $status = taxonomy_term_load($node->field_status_task['und'][0]['tid']);
     $body = (isset($node->body['und'][0]['value'])) ? $node->body['und'][0]['value'] : "";
     $data = array(
         'id' => $nid,
@@ -24,6 +32,8 @@ function tasks_page($nid){
         'executor' => $executor->name,
         'priority' => $priority->name,
         'created' => date('d.m.y H:i'),
+        'status' => $status->name,
+
     );
     $output = theme('task',array('data' => $data));
     return $output;
@@ -38,21 +48,141 @@ function tasks_theme(){
     );
 }
 
-function tasks_comment_form($form, $form_state){
-
-    $form['comment'] = array(
+function tasks_create_task_form($form, $form_state){
+    $form['info'] = array(
         '#type' => 'fieldset',
-        '#title' => 'Новый комментарий',
+        '#title' => 'Новая задача',
         '#collapbsible' => FALSE,
         '#collapsed' => FALSE,
     );
 
-    $form['comment']['text'] = array(
-        '#type' => 'textarea',
-        '#title' => '',
+    $vid_priority = 7;
+    $priority_tree = taxonomy_get_tree($vid_priority);
+    foreach($priority_tree as $item){
+        $tid = $item->tid;
+        $priority_options[$tid] = $item->name;
+    }
+
+    $form['info']['priority'] = array(
+        '#type' => 'select',
+        '#title' => 'Приоритет',
+        '#options' => $priority_options,
+        '#required' => TRUE,
     );
 
-    $form['comment']['submit'] = array(
+    $form['info']['executor'] = array(
+        '#type' => 'select',
+        '#title' => 'Исполнитель',
+        '#options' => array(1 => 'kir', 3 => 'alex'),
+        '#required' => TRUE,
+    );
+
+    $vid_status = 8;
+    $status_tree = taxonomy_get_tree($vid_status);
+    foreach($status_tree as $item){
+        $tid = $item->tid;
+        $status_options[$tid] = $item->name;
+    }
+    $form['info']['status'] = array(
+        '#type' => 'select',
+        '#title' => 'Статус',
+        '#options' => $status_options,
+        '#required' => TRUE,
+    );
+
+//    $form['comment'] = array(
+//        '#type' => 'fieldset',
+//        '#title' => 'Новый комментарий',
+//        '#collapbsible' => FALSE,
+//        '#collapsed' => FALSE,
+//    );
+
+    $form['info']['title'] = array(
+        '#type' => 'textfield',
+        '#title' => 'Название',
+    );
+
+
+    $form['info']['text'] = array(
+        '#type' => 'textarea',
+        '#title' => 'Текст задачи',
+    );
+
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => 'Создать задачу',
+    );
+
+    return $form;
+
+}
+
+function tasks_create_task_form_submit($form, $form_state){
+    dpm('create task');
+}
+
+function tasks_comment_form($form, $form_state){
+    $nid = arg(1);
+    $task = node_load($nid);
+
+    $form['info'] = array(
+        '#type' => 'fieldset',
+        '#title' => 'Редактировать',
+        '#collapbsible' => FALSE,
+        '#collapsed' => FALSE,
+    );
+
+    $vid_priority = 7;
+    $priority_tree = taxonomy_get_tree($vid_priority);
+    foreach($priority_tree as $item){
+        $tid = $item->tid;
+        $priority_options[$tid] = $item->name;
+    }
+
+    $form['info']['priority'] = array(
+        '#type' => 'select',
+        '#title' => 'Приоритет:',
+        '#options' => $priority_options,
+        '#default_value' => $task->field_priority['und'][0]['tid'],
+    );
+
+    $form['info']['executor'] = array(
+        '#type' => 'select',
+        '#title' => 'Исполнитель:',
+        '#options' => array(1 => 'kir', 3 => 'alex'),
+        '#default_value' => $task->field_executor['und'][0]['uid'],
+    );
+
+    $vid_status = 8;
+    $status_tree = taxonomy_get_tree($vid_status);
+    foreach($status_tree as $item){
+        $tid = $item->tid;
+        $status_options[$tid] = $item->name;
+    }
+    $form['info']['status'] = array(
+        '#type' => 'select',
+        '#title' => 'Статус:',
+        '#options' => $status_options,
+        '#default_value' => $task->field_status_task['und'][0]['tid'],
+    );
+
+//    $form['comment'] = array(
+//        '#type' => 'fieldset',
+//        '#title' => 'Новый комментарий',
+//        '#collapbsible' => FALSE,
+//        '#collapsed' => FALSE,
+//    );
+
+
+    $form['info']['text'] = array(
+        '#title' => t('Комментарий'),
+        '#type' => 'text_format',
+       // '#title' => 'Комментарий',
+        '#resizable' => FALSE,
+        '#format' => 'filtered_html'
+    );
+
+    $form['submit'] = array(
         '#type' => 'submit',
         '#value' => 'Оставить комментарий',
     );
@@ -62,10 +192,40 @@ function tasks_comment_form($form, $form_state){
 
 function tasks_comment_form_submit($form, $form_state){
     $nid = arg(1);
+    $task = node_load($nid);
+    $result = "<ul class='list-changes'>";
+        if($form_state['values']['priority'] != $task->field_priority['und'][0]['tid']){
+            $term = taxonomy_term_load($form_state['values']['priority']);
+            $result .= "<li>Изменился приоритет на '{$term->name}' </li>";
+            $task->field_priority['und'][0]['tid'] = $form_state['values']['priority'];
+        }
+
+        if($form_state['values']['status'] != $task->field_status_task['und'][0]['tid']){
+            $term = taxonomy_term_load($form_state['values']['status']);
+            $result .= "<li>Изменился статус на '{$term->name}' </li>";
+            $task->field_status_task['und'][0]['tid'] = $form_state['values']['status'];
+        }
+
+        if($form_state['values']['executor'] != $task->field_executor['und'][0]['uid']){
+            $user = user_load($form_state['values']['status']);
+            $result .= "<li>Изменился исполнитель задачи на '{$user->name}' </li>";
+            $task->field_executor['und'][0]['uid'] = $form_state['values']['executor'];
+        }
+        node_save($task);
+    $result .= "</ul>";
+    $result .= $form_state['values']['text']['value'];
+    tasks_create_comment($nid, $result);
+    drupal_set_message('Комментарий создан');
+}
+
+function tasks_create_task($text){
+
+}
+
+function tasks_create_comment($nid, $text){
     global $user;
-    ddl($form_state);
     $comment = new stdClass();
-        $comment->nid = $nid; // nid of a node you want to attach a comment to
+    $comment->nid = $nid; // nid of a node you want to attach a comment to
     $comment->cid = 0;
     $comment->pid = 0;
     $comment->uid = $user->uid;
@@ -79,10 +239,8 @@ function tasks_comment_form_submit($form, $form_state){
     $comment->status = COMMENT_PUBLISHED; // We auto-publish this comment
     $comment->language = LANGUAGE_NONE;
     $comment->subject = 'Comment subject';
-    $comment->comment_body[$comment->language][0]['value'] = $form_state['values']['text'];
+    $comment->comment_body[$comment->language][0]['value'] = $text;
     $comment->comment_body[$comment->language][0]['format'] = 'filtered_html';
-
     comment_submit($comment); // saving a comment
     comment_save($comment);
-    drupal_set_message('Комментарий создан');
 }

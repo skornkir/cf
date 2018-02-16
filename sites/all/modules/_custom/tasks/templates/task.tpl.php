@@ -44,6 +44,10 @@
                 <label>Исполнитель:</label>
                 <span><?php print $data['executor']; ?></span>
             </div>
+            <div class="info">
+                <label>Статус:</label>
+                <span><?php print $data['status']; ?></span>
+            </div>
         </div>
         <div class="description">
             <div class="title-desc">
@@ -67,7 +71,6 @@
 
                     $cids = $result->fetchCol();
                     $comments=comment_load_multiple($cids);
-                    ddl($comments);
                     foreach($comments as $comment): ?>
 
                      <div class="comment">

@@ -9,5 +9,9 @@
 //                columnWidth: '.views-row',
 //                percentPosition: true
 //            });
+
+            $('.page-task-new select').select2();
+            $('.section-task select').select2();
+
         }}
 })(jQuery)

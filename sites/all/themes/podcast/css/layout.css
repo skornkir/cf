@@ -125,6 +125,7 @@ body{
 
 .view-main-episodes  .views-field-title{
     height: 62px;
+    margin-bottom: 20px;
 }
 
 .header{
@@ -1204,6 +1205,7 @@ textarea{
     border: 1px solid #cccccc;
     margin: 0 2px;
     border-radius: 4px;
+    margin-bottom: 15px;
 }
 
 #tasks-comment-form input[type=submit]{
@@ -1255,3 +1257,82 @@ textarea{
     margin-bottom: 20px;
 }
 
+.page-contacts main > h1{
+    display: none;
+}
+
+.page-task-new main.layout-3col__full{
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.page-task-new main.layout-3col__full select{
+     width: 300px;
+}
+
+.page-task-new #edit-info{
+    margin-bottom: 10px
+}
+
+.page-task-new .form-item{
+    margin: 0;
+}
+
+#tasks-comment-form .form-item{
+    margin: 0;
+    clear: both;
+    margin-bottom: 12px;
+}
+
+#tasks-comment-form #edit-info label{
+    float: left;
+    width: 120px;
+    color: #848484;
+    font-weight: normal;
+    font-size: 14px;
+}
+
+#tasks-comment-form .fieldset-legend{
+    font-weight: 600;
+}
+
+#tasks-comment-form #edit-info select{
+    width: 300px;
+}
+
+.form-type-textarea{
+    clear: both;
+}
+
+.section-task main{
+    margin-bottom: 20px;
+}
+
+#tasks-comment-form{
+    padding: 0 10px;
+}
+
+#tasks-comment-form #edit-info .form-type-textarea label{
+    float: none;
+}
+
+#tasks-comment-form #edit-info .filter-wrapper.form-wrapper{
+    display: none;
+}
+
+#edit-text-format{
+    display: none;
+}
+
+.ckeditor_links{
+    display: none !important;
+}
+
+.comment .list-changes{
+    margin: 0;
+}
+
+.comment .list-changes li{
+    color: #9a9a9a;
+}
