@@ -1,4 +1,4 @@
-<div class="task">
+<div class="task" nid="<?php print $data['id']; ?>">
     <div class="actions-wrapper">
         <div class="actions">
 
@@ -47,6 +47,10 @@
             <div class="info">
                 <label>Статус:</label>
                 <span><?php print $data['status']; ?></span>
+            </div>
+            <div class="info">
+                <label>Проект:</label>
+                <span><?php print $data['project']; ?></span>
             </div>
         </div>
         <div class="description">

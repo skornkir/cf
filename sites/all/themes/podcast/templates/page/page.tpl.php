@@ -13,12 +13,32 @@
 
         <div class="first-header-wrapper">
             <div class="first-header">
-                <div class="logo">
-                    <a href="/">
-                        <img src="/sites/all/themes/podcast/img/logo.png">
-                    </a>
+
+                <nav role="navigation" class="hamburger">
+                    <div id="menuToggle">
+                        <input type="checkbox" />
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <ul id="menu">
+                            <div class="logo">
+                                <a href="/">
+                                    <img src="/sites/all/themes/podcast/img/logo-mobile.png">
+                                </a>
+                            </div>
+                            <?php print render($page['highlighted']); ?>
+                        </ul>
+                    </div>
+                </nav>
+
+                <div class="navigation-desktop">
+                    <div class="logo">
+                        <a href="/">
+                            <img src="/sites/all/themes/podcast/img/logo.png">
+                        </a>
+                    </div>
+                    <?php print render($page['highlighted']); ?>
                 </div>
-                <?php print render($page['highlighted']); ?>
             </div>
         </div>
         <div class="second-header">

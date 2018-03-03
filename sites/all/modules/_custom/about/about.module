@@ -12,7 +12,19 @@ function about_menu(){
         'access callback' => TRUE,
     );
 
+    $blocks['curl'] = array(
+        'page callback' => 'curl_page',
+        'access callback' => TRUE,
+    );
+
     return $blocks;
+}
+
+function curl_page(){
+    ddl($_GET);
+    ddl($_POST);
+    ddl($_FILES);
+    drupal_json_output(array('text' => 'text'));
 }
 
 

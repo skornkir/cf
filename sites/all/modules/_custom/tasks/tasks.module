@@ -5,7 +5,15 @@ function tasks_menu(){
         'title' => '',
         'page callback' => "tasks_page",
         'page arguments' => array(1),
+        'access callback' => 'user_access',
+        'access arguments' => array('view task'),
+    );
+
+    $items['task/%/delete'] = array(
+        'page callback' => 'task_delete',
+        'page arguments' => array(1),
         'access callback' => TRUE,
+        'type'=>MENU_CALLBACK,
     );
 
     $items['task/new'] = array(
@@ -17,13 +25,34 @@ function tasks_menu(){
     return $items;
 }
 
+function tasks_permission(){
+    return array(
+        'view task' => array(
+            'title' => t('View task'),
+            'description' => t('View task'),
+        )
+    );
+}
+
+function task_delete($nid){
+    global $user;
+    if(in_array(3,array_keys($user->roles))){
+        $nid = $_POST['id'];
+        node_delete($nid);
+    }
+    drupal_json_output(array());
+    drupal_exit();
+}
+
 function tasks_page($nid){
     $node = node_load($nid);
     $path = drupal_get_path('module', 'tasks');
+    drupal_add_js($path . "/js/task.js");
     drupal_add_css("sites/all/modules/_custom/tasks" . "/css/styles.css");
     $executor = user_load($node->field_executor['und'][0]['uid']);
     $priority = taxonomy_term_load($node->field_priority['und'][0]['tid']);
     $status = taxonomy_term_load($node->field_status_task['und'][0]['tid']);
+    $project = taxonomy_term_load($node->field_project['und'][0]['tid']);
     $body = (isset($node->body['und'][0]['value'])) ? $node->body['und'][0]['value'] : "";
     $data = array(
         'id' => $nid,
@@ -33,7 +62,7 @@ function tasks_page($nid){
         'priority' => $priority->name,
         'created' => date('d.m.y H:i'),
         'status' => $status->name,
-
+        'project' => $project->name,
     );
     $output = theme('task',array('data' => $data));
     return $output;
@@ -55,6 +84,15 @@ function tasks_create_task_form($form, $form_state){
         '#collapbsible' => FALSE,
         '#collapsed' => FALSE,
     );
+
+    $form['info']['title'] = array(
+        '#type' => 'textfield',
+        '#title' => 'Название',
+    );
+
+    if(isset($_GET['title'])){
+        $form['info']['title']['#default_value'] = $_GET['title'];
+    }
 
     $vid_priority = 7;
     $priority_tree = taxonomy_get_tree($vid_priority);
@@ -90,23 +128,32 @@ function tasks_create_task_form($form, $form_state){
         '#required' => TRUE,
     );
 
-//    $form['comment'] = array(
-//        '#type' => 'fieldset',
-//        '#title' => 'Новый комментарий',
-//        '#collapbsible' => FALSE,
-//        '#collapsed' => FALSE,
-//    );
+    $vid_project = 9;
+    $project_tree = taxonomy_get_tree($vid_project);
+    foreach($project_tree as $item){
+        $tid = $item->tid;
+        $project_options[$tid] = $item->name;
+    }
 
-    $form['info']['title'] = array(
-        '#type' => 'textfield',
-        '#title' => 'Название',
+    $form['info']['project'] = array(
+        '#type' => 'select',
+        '#title' => 'Проект',
+        '#options' => $project_options,
+        '#required' => TRUE,
     );
-
 
     $form['info']['text'] = array(
-        '#type' => 'textarea',
+        '#type' => 'text_format',
+        // '#title' => 'Комментарий',
+        '#resizable' => FALSE,
+        '#format' => 'filtered_html',
+        '#rows' => 10,
         '#title' => 'Текст задачи',
     );
+
+    if(isset($_GET['text'])){
+        $form['info']['text']['#default_value'] = $_GET['body'];
+    }
 
     $form['submit'] = array(
         '#type' => 'submit',
@@ -117,8 +164,47 @@ function tasks_create_task_form($form, $form_state){
 
 }
 
+function tasks_form_views_exposed_form_alter(&$form, $form_state){
+    $form['field_executor_uid']['#default_value'] = 'All';
+    $form['field_executor_uid']['#options']['All'] = 'Любой';
+    $form['field_status_task_tid']['#default_value'] = 'All';
+    $form['field_status_task_tid']['#options']['All'] = 'Любой';
+    $form['field_project_tid']['#default_value'] = 'All';
+    $form['field_project_tid']['#options']['All'] = 'Любой';
+    $form['field_priority_tid']['#default_value'] = 'All';
+    $form['field_priority_tid']['#options']['All'] = 'Любой';
+    foreach ($form_state['view']->filter as $field => $filter) {
+//        ddl($filter);
+//        ddl($filter->options['exposed']);
+//        if ($filter->options['exposed'] && $filter->options['id'] == $nodeid_filter) {
+//            $nodeids = array(
+//                2    => 'Title 1',
+//                5    => 'Title 2',
+//                10   => 'Title 3'
+//            );
+//            $form[$nodeid_filter]['#options'] = $nodeids;
+//            if(array_key_exists($nodeid, $nodeids)) {
+//                $form[$nodeid_filter]['#default_value'] = $nodeid;
+//            }
+//        }
+    }
+}
+
 function tasks_create_task_form_submit($form, $form_state){
-    dpm('create task');
+    global $user;
+    $node = new stdClass();
+    $node->title = $form_state['values']['title'];
+    $node->type = "tasks";
+    node_object_prepare($node);
+    $node->uid = $user->uid;
+    $node->status = 1;
+    $node->field_priority['und'][0]['tid'] = $form_state['values']['priority'];
+    $node->field_status_task['und'][0]['tid'] = $form_state['values']['status'];
+    $node->field_executor['und'][0]['uid'] = $form_state['values']['executor'];
+    $node->field_project['und'][0]['tid'] = $form_state['values']['project'];
+//    $node = node_submit($node);
+    node_save($node);
+    drupal_goto('tasks');
 }
 
 function tasks_comment_form($form, $form_state){
@@ -166,6 +252,20 @@ function tasks_comment_form($form, $form_state){
         '#default_value' => $task->field_status_task['und'][0]['tid'],
     );
 
+    $vid_project = 9;
+    $project_tree = taxonomy_get_tree($vid_project);
+    foreach($project_tree as $item){
+        $tid = $item->tid;
+        $project_options[$tid] = $item->name;
+    }
+
+    $form['info']['project'] = array(
+        '#type' => 'select',
+        '#title' => 'Проект',
+        '#options' => $project_options,
+        '#default_value' => $task->field_project['und'][0]['tid'],
+    );
+
 //    $form['comment'] = array(
 //        '#type' => 'fieldset',
 //        '#title' => 'Новый комментарий',
@@ -175,16 +275,21 @@ function tasks_comment_form($form, $form_state){
 
 
     $form['info']['text'] = array(
-        '#title' => t('Комментарий'),
+        '#title' => t('Комментарий') . ":",
         '#type' => 'text_format',
        // '#title' => 'Комментарий',
         '#resizable' => FALSE,
-        '#format' => 'filtered_html'
+        '#format' => 'filtered_html',
+        '#rows' => 10,
     );
 
     $form['submit'] = array(
         '#type' => 'submit',
         '#value' => 'Оставить комментарий',
+    );
+
+    $form['cancel'] = array(
+        '#markup' => '<div class="cancel">Отменить</div>',
     );
 
     return $form;
@@ -207,9 +312,14 @@ function tasks_comment_form_submit($form, $form_state){
         }
 
         if($form_state['values']['executor'] != $task->field_executor['und'][0]['uid']){
-            $user = user_load($form_state['values']['status']);
+            $user = user_load($form_state['values']['executor']);
             $result .= "<li>Изменился исполнитель задачи на '{$user->name}' </li>";
             $task->field_executor['und'][0]['uid'] = $form_state['values']['executor'];
+        }
+        if($form_state['values']['project'] != $task->field_project['und'][0]['tid']){
+            $term = taxonomy_term_load($form_state['values']['project']);
+            $result .= "<li>Изменился проект на '{$term->name}' </li>";
+            $task->field_project['und'][0]['tid'] = $form_state['values']['project'];
         }
         node_save($task);
     $result .= "</ul>";
@@ -243,4 +353,17 @@ function tasks_create_comment($nid, $text){
     $comment->comment_body[$comment->language][0]['format'] = 'filtered_html';
     comment_submit($comment); // saving a comment
     comment_save($comment);
+}
+
+
+function tasks_views_pre_view(&$view) {
+    switch ($view->name) {
+        case 'tasks': {
+            $view_filters = $view->display_handler->get_option('filters');
+            global $user;
+            $view_filters['field_executor_uid']['value'] = array($user->uid => $user->uid);
+            $view->display_handler->override_option('filters', $view_filters);
+            break;
+        }
+    }
 }
