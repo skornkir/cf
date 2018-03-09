@@ -106,13 +106,16 @@ function tasks_create_task_form($form, $form_state){
         '#title' => 'Приоритет',
         '#options' => $priority_options,
         '#required' => TRUE,
+        '#default_value' => 11,
     );
+
 
     $form['info']['executor'] = array(
         '#type' => 'select',
         '#title' => 'Исполнитель',
         '#options' => array(1 => 'kir', 3 => 'alex'),
         '#required' => TRUE,
+        '#default_value' => 1
     );
 
     $vid_status = 8;
@@ -121,11 +124,13 @@ function tasks_create_task_form($form, $form_state){
         $tid = $item->tid;
         $status_options[$tid] = $item->name;
     }
+
     $form['info']['status'] = array(
         '#type' => 'select',
         '#title' => 'Статус',
         '#options' => $status_options,
         '#required' => TRUE,
+        '#default_value' => 13
     );
 
     $vid_project = 9;
@@ -134,13 +139,15 @@ function tasks_create_task_form($form, $form_state){
         $tid = $item->tid;
         $project_options[$tid] = $item->name;
     }
-
+    ddl($project_options);
     $form['info']['project'] = array(
         '#type' => 'select',
         '#title' => 'Проект',
         '#options' => $project_options,
         '#required' => TRUE,
+        '#default_value' => array_shift(array_keys($project_options))
     );
+
 
     $form['info']['text'] = array(
         '#type' => 'text_format',
@@ -174,8 +181,6 @@ function tasks_form_views_exposed_form_alter(&$form, $form_state){
     $form['field_priority_tid']['#default_value'] = 'All';
     $form['field_priority_tid']['#options']['All'] = 'Любой';
     foreach ($form_state['view']->filter as $field => $filter) {
-//        ddl($filter);
-//        ddl($filter->options['exposed']);
 //        if ($filter->options['exposed'] && $filter->options['id'] == $nodeid_filter) {
 //            $nodeids = array(
 //                2    => 'Title 1',
